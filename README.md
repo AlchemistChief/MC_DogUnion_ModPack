@@ -1,10 +1,10 @@
 # Dog Union Minecraft Server
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Stable Release](https://img.shields.io/badge/Release-Stable-success)
 
 [![Join Our Discord Server](https://img.shields.io/badge/Discord-Join%20Us-7289DA?style=flat&logo=discord&logoColor=white)](https://discord.gg/fREmRmEUTv)
 
+![Stable Release](https://img.shields.io/badge/Release-Stable-success)
 ![Minecraft 1.12.2](https://img.shields.io/badge/Minecraft-1.12.2-brightgreen)
 ![Forge](https://img.shields.io/badge/Mod%20Loader-Forge-FF6C37)
 ![RAM: 8GB](https://img.shields.io/badge/RAM-8GB-blue)
