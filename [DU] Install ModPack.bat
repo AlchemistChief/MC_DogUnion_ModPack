@@ -23,7 +23,8 @@ setlocal disableDelayedExpansion
 :: SOFTWARE.
 :: =======================================================================
 
-set "localVersion=30.03.2025/1"
+set "localVersion=30.03.2025/3"
+set "baseGitHubURL=https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main"
 
 :: =======================================================================
 :: Define ANSI escape sequences for colors
@@ -39,7 +40,7 @@ set "SSCOLOR=%ESC%[1;38;5;46m"
 set "scriptPath=%~dp0"
 set "scriptPath=%scriptPath:~0,-1%"
 for /f "delims=" %%i in ('powershell -NoProfile -Command "[System.IO.Path]::GetFullPath('%scriptPath%')"') do set "realPath=%%i"
-for /f "delims=" %%i in ('powershell -Command "(Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty version"') do set "latestVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty version"') do set "latestVersion=%%i"
 
 echo %DBGCOLOR%=============================== [DEBUG] ===============================%RESET%
 echo %DBGCOLOR%[DEBUG]%RESET% Local version: %localVersion%
@@ -86,12 +87,13 @@ if not exist "%parentDir%versions" (
     exit /b
 )
 
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main/dl.json').Content | ConvertFrom-Json"') do (
-    set "serverDownLoadLink=%%i.serverDownLoadLink"
-    set "clientDownLoadLink=%%i.clientDownLoadLink"
-    set "optionsDownLoadLink=%%i.optionsDownLoadLink"
-    set "optionsofDownLoadLink=%%i.optionsofDownLoadLink"
-)
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty serverDownLoadLink"') do set "serverDownLoadLink=%%i"
+
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "clientDownLoadLink=%%i"
+
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
+
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
 
 :: Set download file paths before prompting for the choice
 set "clientOutputFile=%realPath%\Client_Recommended.zip"
