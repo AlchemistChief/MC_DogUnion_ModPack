@@ -23,7 +23,11 @@ setlocal disableDelayedExpansion
 :: SOFTWARE.
 :: =======================================================================
 
-set "localVersion=29.03.2025/17"
+set "localVersion=29.03.2025/19"
+set "serverDownLoadLink=https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1"
+set "clientDownLoadLink=https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Client_Recommended.zip"
+set "optionsDownLoadLink=https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/options.txt"
+set "optionsofDownLoadLink=https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/optionsof.txt"
 
 :: =======================================================================
 :: Define ANSI escape sequences for colors
@@ -93,28 +97,30 @@ set "optionsFile=%parentDir%options.txt"
 set "optionsOfFile=%parentDir%optionsof.txt"
 
 echo %PTCOLOR%=============================== [PROMPT] ===============================%RESET%
+choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install 'Server_Necessary' (NEEDED TO JOIN)?"
+set "installServer=%errorlevel%"
 choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install 'Client_Recommended'?"
 set "installClient=%errorlevel%"
-if %installClient%==1 (
-    choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install preset Optifine Settings?"
-    set "installOptifineSettings=%errorlevel%"
-)
+choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install preset Optifine Settings? (Only if 'Client_Recommended' = true)"
+set "installOptifineSettings=%errorlevel%"
 choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install preset settings?"
 set "installSettings=%errorlevel%"
 choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to automatically extract the zip files and delete them?"
 set "extractFiles=%errorlevel%"
 
-:: Download 'Server_Necessary' automatically
-echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
-echo %DBCOLOR%[DEBUG]%RESET% Downloading 'Server_Necessary' to: 
-echo %DBCOLOR%[DEBUG]%RESET% "%serverOutputFile%"
-powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1' -OutFile '%serverOutputFile%'"
-if exist "%serverOutputFile%" (
-    echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
-    echo %SSCOLOR%[SUCCESS]%RESET% 'Server_Necessary' download complete.
-) else (
-    echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
-    echo %ERCOLOR%[ERROR]%RESET% Error: 'Server_Necessary' download failed.
+:: Download 'Server_Necessary' if chosen
+if %installServer%==1 (
+	echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
+	echo %DBCOLOR%[DEBUG]%RESET% Downloading 'Server_Necessary' to: 
+	echo %DBCOLOR%[DEBUG]%RESET% "%serverOutputFile%"
+	powershell -NoProfile -Command "Invoke-WebRequest -Uri '%serverDownLoadLink%' -OutFile '%serverOutputFile%'"
+	if exist "%serverOutputFile%" (
+		echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
+		echo %SSCOLOR%[SUCCESS]%RESET% 'Server_Necessary' download complete.
+	) else (
+		echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
+		echo %ERCOLOR%[ERROR]%RESET% Error: 'Server_Necessary' download failed.
+	)
 )
 
 :: Download 'Client_Recommended' if chosen
@@ -122,7 +128,7 @@ if %installClient%==1 (
     echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
     echo %DBCOLOR%[DEBUG]%RESET% Downloading 'Client_Recommended' to: 
     echo %DBCOLOR%[DEBUG]%RESET% "%clientOutputFile%"
-    powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Client_Recommended.zip' -OutFile '%clientOutputFile%'"
+    powershell -NoProfile -Command "Invoke-WebRequest -Uri '%clientDownLoadLink%' -OutFile '%clientOutputFile%'"
     if exist "%clientOutputFile%" (
         echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
         echo %SSCOLOR%[SUCCESS]%RESET% 'Client_Recommended' download complete.
@@ -137,7 +143,7 @@ if %installSettings%==1 (
     echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
     echo %DBCOLOR%[DEBUG]%RESET% Downloading 'options.txt' to: 
     echo %DBCOLOR%[DEBUG]%RESET% "%optionsFile%"
-    powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/options.txt' -OutFile '%optionsFile%'"
+    powershell -NoProfile -Command "Invoke-WebRequest -Uri '%optionsDownLoadLink%' -OutFile '%optionsFile%'"
     if exist "%optionsFile%" (
         echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
         echo %SSCOLOR%[SUCCESS]%RESET% 'options.txt' download complete.
@@ -151,7 +157,7 @@ if "%installOptifineSettings%"=="1" if "%installClient%"=="1" (
     echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
     echo %DBCOLOR%[DEBUG]%RESET% Downloading 'optionsof.txt' to: 
     echo %DBCOLOR%[DEBUG]%RESET% "%optionsOfFile%"
-    powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/optionsof.txt' -OutFile '%optionsOfFile%'"
+    powershell -NoProfile -Command "Invoke-WebRequest -Uri '%optionsofDownLoadLink%' -OutFile '%optionsOfFile%'"
     if exist "%optionsOfFile%" (
         echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
         echo %SSCOLOR%[SUCCESS]%RESET% 'optionsof.txt' download complete.
