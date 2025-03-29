@@ -23,11 +23,7 @@ setlocal disableDelayedExpansion
 :: SOFTWARE.
 :: =======================================================================
 
-set "localVersion=29.03.2025/19"
-set "serverDownLoadLink=https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1"
-set "clientDownLoadLink=https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Client_Recommended.zip"
-set "optionsDownLoadLink=https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/options.txt"
-set "optionsofDownLoadLink=https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/optionsof.txt"
+set "localVersion=30.03.2025/0"
 
 :: =======================================================================
 :: Define ANSI escape sequences for colors
@@ -88,6 +84,13 @@ if not exist "%parentDir%versions" (
     echo %ERCOLOR%[ERROR]%RESET% Error: 'versions' folder does not exist in the parent directory!
     pause
     exit /b
+)
+
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main/dl.json').Content | ConvertFrom-Json"') do (
+    set "serverDownLoadLink=%%i.serverDownLoadLink"
+    set "clientDownLoadLink=%%i.clientDownLoadLink"
+    set "optionsDownLoadLink=%%i.optionsDownLoadLink"
+    set "optionsofDownLoadLink=%%i.optionsofDownLoadLink"
 )
 
 :: Set download file paths before prompting for the choice
