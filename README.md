@@ -72,10 +72,10 @@ To join the Dog Union Minecraft Server, choose one of the following installation
 For users familiar with mod installations:
 
 1. **Download the Necessary Files:**
-   - Download [`Server_Necessary.zip`]([https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Server_Necessary.zip](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1)) located in /root/files of this repository.
+   - Download [`Server_Necessary.zip`](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1) located in /root/files of this repository.
 
 2. **Install Server Mods:**
-   - Move the [`Server_Necessary.zip`]([https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Server_Necessary.zip](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1)) file into your Minecraft `/mods` directory.
+   - Move the [`Server_Necessary.zip`](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1) file into your Minecraft `/mods` directory.
    - Use "Extract here", wait until the process is finished.
 
 3. **Install Optional Mods:**
