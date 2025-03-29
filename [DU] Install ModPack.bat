@@ -23,7 +23,7 @@ setlocal disableDelayedExpansion
 :: SOFTWARE.
 :: =======================================================================
 
-set "localVersion=29.03.2025/15"
+set "localVersion=29.03.2025/17"
 
 :: =======================================================================
 :: Define ANSI escape sequences for colors
@@ -108,7 +108,7 @@ set "extractFiles=%errorlevel%"
 echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
 echo %DBCOLOR%[DEBUG]%RESET% Downloading 'Server_Necessary' to: 
 echo %DBCOLOR%[DEBUG]%RESET% "%serverOutputFile%"
-powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Server_Necessary.zip' -OutFile '%serverOutputFile%'"
+powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1' -OutFile '%serverOutputFile%'"
 if exist "%serverOutputFile%" (
     echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
     echo %SSCOLOR%[SUCCESS]%RESET% 'Server_Necessary' download complete.
