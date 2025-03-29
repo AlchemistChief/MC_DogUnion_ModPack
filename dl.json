@@ -1,1 +1,6 @@
-empty
+{
+  "serverDownLoadLink": "https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1",
+  "clientDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Client_Recommended.zip",
+  "optionsDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/options.txt",
+  "optionsofDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/optionsof.txt"
+}
