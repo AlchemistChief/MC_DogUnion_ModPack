@@ -15,9 +15,9 @@ The Dog Union Minecraft Server is a customized Minecraft 1.12.2 server that enha
 
 ## Features
 
-- **Advanced Production Facilities:** Utilize mods like Mekanism to implement complex ore processing and machinery setups, enabling efficient resource management and automation. citeturn0search4
+- **Advanced Production Facilities:** Utilize mods like Mekanism to implement complex ore processing and machinery setups, enabling efficient resource management and automation.
 
-- **Modern Weaponry:** Equip yourself with a variety of firearms introduced by mods such as Modern Warfare Mod, offering an arsenal of 3D-modeled guns for enhanced combat scenarios. citeturn0search13
+- **Modern Weaponry:** Equip yourself with a variety of firearms introduced by mods such as Modern Warfare Mod, offering an arsenal of 3D-modeled guns for enhanced combat scenarios.
 
 - **Diverse Vehicles:** Traverse the expansive world using a range of vehicles, facilitating exploration and transportation across different terrains.
 
@@ -45,19 +45,29 @@ Before joining the Dog Union Minecraft Server, ensure your system meets the foll
 
 To join the Dog Union Minecraft Server, choose one of the following installation methods:
 
-### Option 1: Using the Install Batch Script
+Sure! Here's the updated section formatted for a `README.md` file:
+
+---
+
+## Installation
+
+To join the Dog Union Minecraft Server, choose one of the following installation methods:
+
+### Option 1: Automatic Installation
 
 1. **Download the Repository:**
    - Click on the "Code" button at the top of this repository page.
    - Select "Download ZIP."
    - Once downloaded, extract the ZIP file to your desired location.
 
-2. **Run the Installation Script:**
-   - Navigate to the extracted folder.
-   - Locate the `install.bat` file.
-   - Double-click `install.bat` to execute the installation process.
+2. **Move the Install Script:**
+   - Inside the extracted folder, locate the `script.bat` file.
+   - Copy and place the `script.bat` file into your Minecraft `/mods` directory.
 
-   *Note: The script will guide you through the installation steps. Ensure you have the necessary permissions to run batch scripts on your system.*
+3. **Run the Script:**
+   - Double-click the `script.bat` file to start the automatic installation process.
+
+   _Note: The script will guide you through the installation and ensure all necessary components are correctly configured._
 
 ### Option 2: Manual Installation
 
@@ -66,15 +76,50 @@ For users familiar with mod installations:
 1. **Download the Necessary Files:**
    - Clone the repository or download the ZIP file as mentioned above.
 
-2. **Configure the Mods:**
-   - Place the provided mod files into your Minecraft `mods` directory.
-   - Adjust any configuration files as needed to match your preferences.
+2. **Install Server Files:**
+   - Navigate to the `/files` directory within the extracted repository.
+   - Install the `Server_Necessary.zip` by extracting it into your Minecraft root directory.
 
-3. **Launch the Game:**
+3. **Place Option Files:**
+   - Move the `options.txt`, `optionsof.txt`, and `Client_Recommended` files into your Minecraft root directory (i.e., `/.minecraft`).
+
+4. **Install Mods:**
+   - Open the `/mods` directory in your Minecraft folder and place the mod files.
+   - Create the folder `1.12.2` if it doesn’t exist and move the necessary mods there.
+
+5. **Launch Minecraft:**
    - Start Minecraft with the Forge 1.12.2 profile.
    - Verify that all mods are loaded correctly and join the server using the provided IP address.
 
-*Note: Detailed instructions for manual configuration are beyond the scope of this document. Please refer to individual mod documentation for specific guidance.*
+---
+
+## Folder Structure
+
+Here's a quick overview of the folder structure for both installation methods:
+
+### Automatic Installation Folder Structure
+
+```
+/.minecraft
+ └── /mods
+     └── script.bat
+```
+
+### Manual Installation Folder Structure
+
+```
+/.minecraft
+ └── /mods
+     └── /1.12.2
+         └── (examplemods here)
+ └── options.txt
+ └── optionsof.txt
+ └── Client_Recommended
+```
+
+---
+
+This should now fit perfectly into your `README.md` file. Let me know if you need further changes!
 
 ## Usage
 
