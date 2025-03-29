@@ -87,13 +87,13 @@ if not exist "%parentDir%versions" (
     exit /b
 )
 
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty serverDownLoadLink"') do set "serverDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty serverDownLoadLink"') do set "serverDownLoadLink=%%i"
 
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "clientDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "clientDownLoadLink=%%i"
 
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
 
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/dl.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
 
 :: Set download file paths before prompting for the choice
 set "clientOutputFile=%realPath%\Client_Recommended.zip"
