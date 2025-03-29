@@ -23,7 +23,7 @@ setlocal disableDelayedExpansion
 :: SOFTWARE.
 :: =======================================================================
 
-set "localVersion=29.03.2025/1"
+set "localVersion=29.03.2025/6"
 
 :: =======================================================================
 :: Define ANSI escape sequences for colors
@@ -73,8 +73,11 @@ if not exist "%realPath%" (
 )
 
 :: Set download file paths before prompting for the choice
+for %%A in ("%realPath%") do set "parentDir=%%~dpA"
 set "clientOutputFile=%realPath%\Client_Recommended.zip"
 set "serverOutputFile=%realPath%\Server_Necessary.zip"
+set "optionsFile=%parentDir%options.txt"
+set "optionsOfFile=%parentDir%optionsof.txt"
 
 echo %PTCOLOR%=============================== [PROMPT] ===============================%RESET%
 choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install 'Client_Recommended'?"
@@ -87,21 +90,6 @@ choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to install preset settings
 set "installSettings=%errorlevel%"
 choice /C YN /M "%PTCOLOR%[PROMPT]%RESET% Do you want to automatically extract the zip files and delete them?"
 set "extractFiles=%errorlevel%"
-
-:: Check if 'options.txt' exists and download if not
-if not exist "files\options.txt" (
-    echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
-    echo %DBCOLOR%[DEBUG]%RESET% Downloading 'options.txt' to: 
-    echo %DBCOLOR%[DEBUG]%RESET% "files\options.txt"
-    powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/options.txt' -OutFile 'files\options.txt'"
-    if exist "files\options.txt" (
-        echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
-        echo %SSCOLOR%[SUCCESS]%RESET% 'options.txt' download complete.
-    ) else (
-        echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
-        echo %ERCOLOR%[ERROR]%RESET% Error: 'options.txt' download failed.
-    )
-)
 
 :: Download 'Server_Necessary' automatically
 echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
@@ -125,24 +113,38 @@ if %installClient%==1 (
     if exist "%clientOutputFile%" (
         echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
         echo %SSCOLOR%[SUCCESS]%RESET% 'Client_Recommended' download complete.
-        
-        :: Download 'optionsof.txt' if Optifine settings are chosen
-        if %installOptifineSettings%==1 (
-            echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
-            echo %DBCOLOR%[DEBUG]%RESET% Downloading 'optionsof.txt' to: 
-            echo %DBCOLOR%[DEBUG]%RESET% "files\optionsof.txt"
-            powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/optionsof.txt' -OutFile 'files\optionsof.txt'"
-            if exist "files\optionsof.txt" (
-                echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
-                echo %SSCOLOR%[SUCCESS]%RESET% 'optionsof.txt' download complete.
-            ) else (
-                echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
-                echo %ERCOLOR%[ERROR]%RESET% 'optionsof.txt' download failed.
-            )
-        )
     ) else (
         echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
         echo %ERCOLOR%[ERROR]%RESET% 'Client_Recommended' download failed.
+    )
+)
+
+:: Check if 'options.txt' exists and download if not
+if %installSettings%==1 (
+    echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
+    echo %DBCOLOR%[DEBUG]%RESET% Downloading 'options.txt' to: 
+    echo %DBCOLOR%[DEBUG]%RESET% "%optionsFile%"
+    powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/options.txt' -OutFile '%optionsFile%'"
+    if exist "%optionsFile%" (
+        echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
+        echo %SSCOLOR%[SUCCESS]%RESET% 'options.txt' download complete.
+    ) else (
+        echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
+        echo %ERCOLOR%[ERROR]%RESET% Error: 'options.txt' download failed.
+    )
+)
+:: Download 'optionsof.txt' if Optifine settings are chosen and Client is installed
+if %installOptifineSettings%==1 && %installClient%==1 (
+    echo %DBCOLOR%=============================== [DEBUG] ===============================%RESET%
+    echo %DBCOLOR%[DEBUG]%RESET% Downloading 'optionsof.txt' to: 
+    echo %DBCOLOR%[DEBUG]%RESET% "%optionsOfFile%"
+    powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/optionsof.txt' -OutFile '%optionsOfFile%'"
+    if exist "%optionsOfFile%" (
+        echo %SSCOLOR%=============================== [SUCCESS] ===============================%RESET%
+        echo %SSCOLOR%[SUCCESS]%RESET% 'optionsof.txt' download complete.
+    ) else (
+        echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
+        echo %ERCOLOR%[ERROR]%RESET% 'optionsof.txt' download failed.
     )
 )
 
