@@ -23,7 +23,7 @@ setlocal disableDelayedExpansion
 :: SOFTWARE.
 :: =======================================================================
 
-set "localVersion=29.03.2025/11"
+set "localVersion=29.03.2025/15"
 
 :: =======================================================================
 :: Define ANSI escape sequences for colors
@@ -56,20 +56,23 @@ echo %DBCOLOR%[DEBUG]%RESET% Real path:
 echo %DBCOLOR%[DEBUG]%RESET% %realPath%
 
 :: Check if the script is in a directory under \mods\
-echo %realPath% | findstr /i "\\mods\\" >nul
-if %errorlevel% neq 0 (
+set "folderName="
+for %%B in ("%realPath%") do set "folderName=%%~nxB"
+for %%A in ("%realPath%") do set "parentDir=%%~dpA"
+
+if /i not "%folderName%"=="mods" (
     echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
     echo %ERCOLOR%[ERROR]%RESET% Error: This script is not located in a directory under \mods\.
     pause
     exit /b
 )
+
 if not exist "%realPath%" (
     echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
     echo %ERCOLOR%[ERROR]%RESET% Error: The directory "%realPath%" does not exist!
     pause
     exit /b
 )
-for %%A in ("%realPath%") do set "parentDir=%%~dpA"
 if not exist "%parentDir%config" (
     echo %ERCOLOR%=============================== [ERROR] ===============================%RESET%
     echo %ERCOLOR%[ERROR]%RESET% Error: 'config' folder does not exist in the parent directory!
