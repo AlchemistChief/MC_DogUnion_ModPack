@@ -3,10 +3,9 @@
 
 [![Join Our Discord Server](https://img.shields.io/badge/Discord-Join%20Us-7289DA?style=flat&logo=discord&logoColor=white)](https://discord.gg/fREmRmEUTv)
 
-![Stable Release](https://img.shields.io/badge/Release-Stable-success)
-![Minecraft 1.12.2](https://img.shields.io/badge/Minecraft-1.12.2-brightgreen)
+![Minecraft](https://img.shields.io/badge/Minecraft_Version-1.12.2-brightgreen)
 ![Forge](https://img.shields.io/badge/Mod%20Loader-Forge-FF6C37)
-![RAM: 8GB](https://img.shields.io/badge/RAM-8GB-blue)
+![RAM](https://img.shields.io/badge/Recommended_RAM-8GB-blue)
 
 ---
 ## Features
