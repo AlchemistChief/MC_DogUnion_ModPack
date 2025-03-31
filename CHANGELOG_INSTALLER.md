@@ -1,7 +1,7 @@
 # Changelog - Installer  
 
 
-![Latest Version](https://img.shields.io/badge/Latest_Version-2.4-blue)
+![Latest Version](https://img.shields.io/badge/Latest_Version-2.5-blue)
 
 Current Features:
 
@@ -13,6 +13,13 @@ Current Features:
 ---
 
 This changelog tracks changes to the installer, including new features, quality of life improvements, and bug fixes.  
+
+## [31-03-2025] - ![Version](https://img.shields.io/badge/Version-2.5-blue)  
+
+### Features  
+- ⚙️ Removed %RealPath%, as this is equal to the current %scriptPath%
+- ⚙️ Added debugging for current Folder name
+- ⚙️ Added autoamtic Extraction for Config_Base.zip
 
 ## [31-03-2025] - ![Version](https://img.shields.io/badge/Version-2.4-blue)  
 
