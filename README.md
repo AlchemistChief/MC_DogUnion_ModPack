@@ -27,7 +27,7 @@
 ## Requirements
 Before joining the Dog Union Minecraft Server, ensure your system meets the following prerequisites:
 
-- **Minecraft** [`Offline`](https://www.dropbox.com/scl/fi/t8fa87p6ydaavq8smnvk8/TLegacy_Portable.zip?rlkey=xwiv33t6qhovqf5uem8zvg1my&st=n7z85bt4&dl=1) or Premium
+- **Minecraft** [`Offline`](https://www.dropbox.com/scl/fi/t8fa87p6ydaavq8smnvk8/TLegacy_Portable.zip?rlkey=xwiv33t6qhovqf5uem8zvg1my&dl=1) or Premium
 
 - **Minecraft Version:** 1.12.2 with Forge Mod Loader installed.
 
@@ -65,18 +65,18 @@ To join the Dog Union Minecraft Server, choose one of the following installation
 For users familiar with mod installations:
 
 1. **Download the Necessary Files:**
-   - Download [`Server_Necessary.zip`](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1) located in /root/files of this repository.
+   - Download [`Server_Necessary.zip`](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&dl=1) located in /root/files of this repository.
 
 2. **Install Server Mods:**
-   - Move the [`Server_Necessary.zip`](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1) file into your Minecraft `/mods` directory.
+   - Move the [`Server_Necessary.zip`](https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&dl=1) file into your Minecraft `/mods` directory.
    - Use "Extract here", wait until the process is finished.
 
 3. **Install Optional Mods:**
-   - Move the [`Client_Recommended.zip`](https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Client_Recommended.zip) file into your Minecraft `/mods` directory.
+   - Move the [`Client_Recommended.zip`](https://www.dropbox.com/scl/fi/jdppbu069i1p2ld06a4w9/Client_Recommended.zip?rlkey=8ju7nb3xcq5n57ogefj3w3mhf&dl=1) file into your Minecraft `/mods` directory.
    - Use "Extract here", wait until the process is finished.
 4. **Install Optional Option Files**
    - Download your optional files located in /root/files of this repository.
-   - Move [`options.txt`](https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/options.txt)|[`optionsof.txt`](https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/optionsof.txt) to your Minecraft directory.
+   - Move [`options.txt`](https://github.com/AlchemistChief/MC_DogUnion_ModPack/blob/main/files/options.txt)|[`optionsof.txt`](https://github.com/AlchemistChief/MC_DogUnion_ModPack/blob/main/files/optionsof.txt) to your Minecraft directory.
    - Replace the old files if needed
 
 5. **Launch Minecraft:**

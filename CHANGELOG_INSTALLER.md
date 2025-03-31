@@ -1,48 +1,46 @@
 # Changelog - Installer  
-
-
-![Latest Version](https://img.shields.io/badge/Latest_Version-2.5-blue)
+---
+![Latest Installer Version](https://img.shields.io/badge/Latest_Installer_Version-2.5-blue)  ![Latest Release](https://img.shields.io/badge/Latest_Release-Stable-brightgreen)
 
 Current Features:
 
-![Features](https://img.shields.io/badge/Mod_Installation-brightblue)
-![Features](https://img.shields.io/badge/Config_Installation-brightblue)
-![Features](https://img.shields.io/badge/Setting_Installation-brightblue)
-![Features](https://img.shields.io/badge/Auto_Extracting-brightblue)
+![Features](https://img.shields.io/badge/Mod_Installation-green)
+![Features](https://img.shields.io/badge/Config_Installation-green)
+![Features](https://img.shields.io/badge/Setting_Installation-green)
+![Features](https://img.shields.io/badge/Auto_Extracting-green)
 
 ---
 
 This changelog tracks changes to the installer, including new features, quality of life improvements, and bug fixes.  
 
-## [31-03-2025] - ![Version](https://img.shields.io/badge/Version-2.5-blue)  
+---
+## [31.03.2025] - ![Installer Version](https://img.shields.io/badge/Installer_Version-2.5-blue) ![Release](https://img.shields.io/badge/Release-Stable-brightgreen)
 
 ### Features  
 - ⚙️ Removed %RealPath%, as this is equal to the current %scriptPath%
 - ⚙️ Added debugging for current Folder name
-- ⚙️ Added autoamtic Extraction for Config_Base.zip
+- ⚙️ Added automatic extraction for Config_Base.zip
+- ⚙️ Client_Recommended:
+  - Now has ALL Client mods (Before only the Optimization Mods)
+- ⚙️ Server_Necessary:
+  - Now has ONLY the Server Mods needed (Before it was also installing /Client)
 
-## [31-03-2025] - ![Version](https://img.shields.io/badge/Version-2.4-blue)  
+---
+## [31.03.2025] - ![Installer Version](https://img.shields.io/badge/Installer_Version-2.4-darkblue) ![Release](https://img.shields.io/badge/Release-Stable-brightgreen)
 
 ### Features  
-- ⚙️ Added option to choose 'Configs_Client' installation.
+- ⚙️ Added option to choose 'Configs_Base' installation.
 - ⚙️ Added Development environment.
 - ⚙️ Added version checks for:
- - Server_Necessary
- - Client_Recommended
- - Config_Client
+  - Server_Necessary
+  - Client_Recommended
+  - Config_Base
 - ⚙️ Added "tooltips" to the prompts.
 - ⚙️ Performance optimization.
 
 <!--
-## [2025-03-31] - Version 2.0.1 ![Version](https://img.shields.io/badge/Version-2.0.1-blue)  
-
 ### QOL  
-- 🎨 Redesigned UI for easier navigation.  
-
-### Features  
-- ⚙️ Added option to choose installation path.  
-
+- 🎨 Redesigned UI for easier navigation.   
 ### Bug Fixes  
 - 🛠 Fixed issue where the installer would not detect Java correctly.  
-
 -->

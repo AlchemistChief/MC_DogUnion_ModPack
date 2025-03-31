@@ -1,7 +1,7 @@
 {
-  "serverDownLoadLink": "https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&st=q2eyzn1c&dl=1",
-  "clientDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Client_Recommended.zip",
-  "configDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Configs_Client.zip",
+  "serverDownLoadLink": "https://www.dropbox.com/scl/fi/uv40o6xnr1rrp7hbzjbzm/Server_Necessary.zip?rlkey=0brngq151buti04yoe8tg4m9z&dl=1",
+  "clientDownLoadLink": "https://www.dropbox.com/scl/fi/jdppbu069i1p2ld06a4w9/Client_Recommended.zip?rlkey=8ju7nb3xcq5n57ogefj3w3mhf&dl=1",
+  "configDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/Config_Base.zip",
   "optionsDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/options.txt",
   "optionsofDownLoadLink": "https://github.com/AlchemistChief/MC_DogUnion_ModPack/raw/refs/heads/main/files/optionsof.txt"
 }
