@@ -1,5 +1,4 @@
-@echo off
-setlocal disableDelayedExpansion
+@echo off && setlocal disableDelayedExpansion
 
 :: =======================================================================
 :: This script is licensed under the MIT License.
@@ -22,17 +21,25 @@ setlocal disableDelayedExpansion
 :: OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 :: SOFTWARE.
 :: =======================================================================
+
 set "baseGitHubURL=https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main"
 set "localBatVersion=2.4"
 set "localServerVersion=1.0"
 set "localClientVersion=1.0"
 set "localConfigVersion=1.0"
 
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty bat_version"') do set "latestBatVersion=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty server_version"') do set "latestServerVersion=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty client_version"') do set "latestClientVersion=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty config_version"') do set "latestConfigVersion=%%i"
-:: =======================================================================
+::================================================================================================
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty bat_version"') do set "latestBatVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty server_version"') do set "latestServerVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty client_version"') do set "latestClientVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty config_version"') do set "latestConfigVersion=%%i"
+
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty serverDownLoadLink"') do set "serverDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "clientDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "configDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
+::================================================================================================
 :: Define ANSI escape sequences for colors
 for /f %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 set "RESET=%ESC%[0m"
@@ -53,7 +60,7 @@ echo %BLUECOLOR%=============================== [DEBUG] ========================
 echo %BLUECOLOR%[DEBUG]%RESET% Author:Mr_Alchemy/gunsgamertv
 echo %BLUECOLOR%[DEBUG]%RESET% ProgressBar:%GREENCOLOR%Custom%RESET%
 echo %BLUECOLOR%[DEBUG]%RESET% Local Bat version:%localBatVersion%
-if "%latestBatVersion%" neq "%localBatVersion%" ( echo %REDCOLOR%[DEBUG] Server Bat version:%latestBatVersion%%RESET% && echo %REDCOLOR%[DEBUG] Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[INFO]%RESET% Server Bat version:%latestBatVersion%)
+if "%latestBatVersion%" neq "%localBatVersion%" ( echo %REDCOLOR%[DEBUG] Server Bat version: %latestBatVersion%%RESET% && echo %REDCOLOR%[DEBUG] Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[INFO]%RESET% Server Bat version:%latestBatVersion%)
 echo %BLUECOLOR%[DEBUG]%RESET% Script path:	%scriptPath%
 echo %BLUECOLOR%[DEBUG]%RESET% Absolute path:	%realPath%
 
@@ -99,12 +106,6 @@ if /i not "%folderName%"=="MC_DogUnion_ModPack" (
 		exit /b
 	)
 )
-::================================================================================================
-for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty serverDownLoadLink"') do set "serverDownLoadLink=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "clientDownLoadLink=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "configDownLoadLink=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
 ::================================================================================================
 :: Set download file paths before prompting for the choice
 set "serverOutputFile=%realPath%\Server_Necessary.zip"

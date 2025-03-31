@@ -24,6 +24,7 @@ This changelog tracks changes to the installer, including new features, quality 
  - Client_Recommended
  - Config_Client
 - ⚙️ Added "tooltips" to the prompts.
+- ⚙️ Performance optimization.
 
 <!--
 ## [2025-03-31] - Version 2.0.1 ![Version](https://img.shields.io/badge/Version-2.0.1-blue)  
