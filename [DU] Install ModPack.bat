@@ -1,5 +1,4 @@
 @echo off && setlocal disableDelayedExpansion
-
 :: =======================================================================
 :: This script is licensed under the MIT License.
 :: 
@@ -21,13 +20,18 @@
 :: OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 :: SOFTWARE.
 :: =======================================================================
-
+:: Define ANSI escape sequences for colors
+for /f %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
+set "RESET=%ESC%[0m"
+set "GOLDCOLOR=%ESC%[1;38;5;220m"
+set "REDCOLOR=%ESC%[1;38;5;196m"
+set "BLUECOLOR=%ESC%[1;38;5;75m"
+set "GREENCOLOR=%ESC%[1;38;5;46m"
+::================================================================================================
+echo %BLUECOLOR%=============================== [DEBUG] ===============================%RESET%
+echo %BLUECOLOR%[DEBUG]%RESET% Loading Version...
 set "baseGitHubURL=https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main"
 set "localBatVersion=2.4"
-set "localServerVersion=1.0"
-set "localClientVersion=1.0"
-set "localConfigVersion=1.0"
-
 ::================================================================================================
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty bat_version"') do set "latestBatVersion=%%i"
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty server_version"') do set "latestServerVersion=%%i"
@@ -40,27 +44,20 @@ for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
 ::================================================================================================
-:: Define ANSI escape sequences for colors
-for /f %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
-set "RESET=%ESC%[0m"
-set "GOLDCOLOR=%ESC%[1;38;5;220m"
-set "REDCOLOR=%ESC%[1;38;5;196m"
-set "BLUECOLOR=%ESC%[1;38;5;75m"
-set "GREENCOLOR=%ESC%[1;38;5;46m"
-
 :: Get the full path of the script
 set "scriptPath=%~dp0"
 set "scriptPath=%scriptPath:~0,-1%"
-
 for /f "delims=" %%i in ('powershell -NoProfile -Command "[System.IO.Path]::GetFullPath('%scriptPath%')"') do set "realPath=%%i"
 for %%B in ("%realPath%") do set "folderName=%%~nxB"
 for %%A in ("%realPath%") do set "parentDir=%%~dpA"
-
-echo %BLUECOLOR%=============================== [DEBUG] ===============================%RESET%
-echo %BLUECOLOR%[DEBUG]%RESET% Author:Mr_Alchemy/gunsgamertv
-echo %BLUECOLOR%[DEBUG]%RESET% ProgressBar:%GREENCOLOR%Custom%RESET%
-echo %BLUECOLOR%[DEBUG]%RESET% Local Bat version:%localBatVersion%
-if "%latestBatVersion%" neq "%localBatVersion%" ( echo %REDCOLOR%[DEBUG] Server Bat version: %latestBatVersion%%RESET% && echo %REDCOLOR%[DEBUG] Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[INFO]%RESET% Server Bat version:%latestBatVersion%)
+::================================================================================================
+echo %BLUECOLOR%[DEBUG]%RESET% Script Author:			Mr_Alchemy/gunsgamertv
+echo %BLUECOLOR%[DEBUG]%RESET% ProgressBar:			%GREENCOLOR%Custom%RESET%
+echo						%GOLDCOLOR%Local%RESET% / %GREENCOLOR%Server%RESET%
+if "%localBatVersion%" neq "%latestBatVersion%" ( echo %REDCOLOR%[DEBUG]%RESET% Bat version:			%GOLDCOLOR%%localBatVersion%%RESET% / %REDCOLOR%%latestBatVersion%%RESET%	%REDCOLOR%Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[DEBUG]%RESET% Bat version:			%GOLDCOLOR%%localBatVersion%%RESET% / %GREENCOLOR%%latestBatVersion%%RESET%)
+echo %BLUECOLOR%[DEBUG]%RESET% Server_Necessary version:	N/A / %GREENCOLOR%%latestServerVersion%%RESET%
+echo %BLUECOLOR%[DEBUG]%RESET% Client_Recommended version:	N/A / %GREENCOLOR%%latestClientVersion%%RESET%
+echo %BLUECOLOR%[DEBUG]%RESET% Config_Base version:		N/A / %GREENCOLOR%%latestConfigVersion%%RESET%
 echo %BLUECOLOR%[DEBUG]%RESET% Script path:	%scriptPath%
 echo %BLUECOLOR%[DEBUG]%RESET% Absolute path:	%realPath%
 
@@ -78,114 +75,93 @@ for /f "skip=1 tokens=*" %%A in ('wmic path win32_VideoController get name') do 
     )
 )
 :done
-
 ::================================================================================================
+:: Set download file paths before prompting for the choice
+set "serverOutputFile=%realPath%\Server_Necessary.zip"
+set "clientOutputFile=%realPath%\Client_Recommended.zip"
+set "configOutputFile=%parentDir%config\Config_Base.zip"
+set "optionsFile=%parentDir%options.txt"
+set "optionsOfFile=%parentDir%optionsof.txt"
+::================================================================================================
+::Check for correct Folder
 if /i not "%folderName%"=="MC_DogUnion_ModPack" (
 	if /i not "%folderName%"=="mods" (
-	::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-	echo %REDCOLOR%[ERROR]%RESET% Error: This script is not located in a directory under \mods\.
-	pause
-	exit /b
+		echo %REDCOLOR%[ERROR]%RESET% This script is not located in a directory under \mods\.
+		pause
+		exit /b
 	)
 	if not exist "%realPath%" (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-		echo %REDCOLOR%[ERROR]%RESET% Error: The directory "%realPath%" does not exist!
+		echo %REDCOLOR%[ERROR]%RESET% The directory "%realPath%" does not exist!
 		pause
 		exit /b
 	)
 	if not exist "%parentDir%config" (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-		echo %REDCOLOR%[ERROR]%RESET% Error: 'config' folder does not exist in the parent directory!
-		pause
-		exit /b
-	)
-	if not exist "%parentDir%versions" (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-		echo %REDCOLOR%[ERROR]%RESET% Error: 'versions' folder does not exist in the parent directory!
+		echo %REDCOLOR%[ERROR]%RESET% 'config' folder does not exist in the parent directory!
 		pause
 		exit /b
 	)
 )
 ::================================================================================================
-:: Set download file paths before prompting for the choice
-set "serverOutputFile=%realPath%\Server_Necessary.zip"
-set "clientOutputFile=%realPath%\Client_Recommended.zip"
-set "configOutputFile=%realPath%\Config_Client.zip"
-set "optionsFile=%parentDir%options.txt"
-set "optionsOfFile=%parentDir%optionsof.txt"
-
 echo %GOLDCOLOR%=============================== [PROMPT] ===============================%RESET%
-echo "%GOLDCOLOR%[INFO]%RESET% 'Server_Necessary' => %REDCOLOR%NECESSARY%GOLDCOLOR% to join the server"
-echo "%GOLDCOLOR%[INFO]%RESET% 'Client_Recommended' => %GREENCOLOR%OPTIONAL%GOLDCOLOR% for QOL & Performance Mods"
-echo "%GOLDCOLOR%[INFO]%RESET% 'Configs_Client' is %GREENCOLOR%OPTIONAL%GOLDCOLOR% => Install to fix some bugs & QOL"
-echo "%GOLDCOLOR%[INFO]%RESET% The preset settings (options.txt) sets keybinds & graphic options"
-echo "%GOLDCOLOR%[INFO]%RESET% The preset Optifine settings (optionsof.txt) graphic options 'Client_Recommended' must be %GREENCOLOR%TRUE%RESET%"
+echo %GOLDCOLOR%[INFO]%RESET% %REDCOLOR%NECESSARY%RESET%'Server_Necessary', Install to join the server
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Client_Recommended', Install for QOL and Performance Mods
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Config_Base', Install to fix some bugs and QOL
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'options.txt', Install for preset keybinds and graphic options
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'optionsof.txt', Install for preset Optifine settings graphic options 'Client_Recommended' must be %GREENCOLOR%TRUE%RESET%
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Server_Necessary'?"
 set "installServer=%errorlevel%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Client_Recommended'?"
 set "installClient=%errorlevel%"
-choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Configs'?"
+choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Config_Base'?"
 set "installConfigs=%errorlevel%"
-choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install preset settings?"
+choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'options.txt'?"
 set "installSettings=%errorlevel%"
-choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install preset Optifine Settings?"
+choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'optionsof.txt' (Optifine)?"
 set "installOptifineSettings=%errorlevel%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to automatically extract the zip files?"
 set "extractFiles=%errorlevel%"
-
 ::================================================================================================
-:: Download 'Server_Necessary' if chosen
+:: Download 'Server_Necessary.zip' if chosen
 if %installServer%==1 (
 	echo %BLUECOLOR%=============================== [DOWNLOAD] ===============================%RESET%
 	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'Server_Necessary'
 	powershell -NoProfile -Command "$url = '%serverDownLoadLink%'; $output = '%serverOutputFile%'; $webClient = New-Object System.Net.WebClient; $webClient.DownloadFileAsync($url, $output); while ($webClient.IsBusy) { Start-Sleep -Seconds 2; $fileSizeBytes = (Get-Item $output).Length; $fileSizeMB = [math]::Round($fileSizeBytes / 1MB, 2); Write-Host '%BLUECOLOR%[DEBUG]%RESET% Downloaded%GOLDCOLOR%' $fileSizeMB '%RESET%MB'; }"
 	if exist "%serverOutputFile%" (
-		::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
 		echo %GREENCOLOR%[SUCCESS]%RESET% 'Server_Necessary' download complete.
 	) else (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
 		echo %REDCOLOR%[ERROR]%RESET% Error: 'Server_Necessary' download failed.
 	)
 )
-
-:: Download 'Client_Recommended' if chosen
+:: Download 'Client_Recommended.zip' if chosen
 if %installClient%==1 (
 	echo %BLUECOLOR%=============================== [DOWNLOAD] ===============================%RESET%
 	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'Client_Recommended'
 	powershell -NoProfile -Command "$url = '%clientDownLoadLink%'; $output = '%clientOutputFile%'; $webClient = New-Object System.Net.WebClient; $webClient.DownloadFileAsync($url, $output); while ($webClient.IsBusy) { Start-Sleep -Seconds 2; $fileSizeBytes = (Get-Item $output).Length; $fileSizeMB = [math]::Round($fileSizeBytes / 1MB, 2); Write-Host '%BLUECOLOR%[DEBUG]%RESET% Downloaded%GOLDCOLOR%' $fileSizeMB '%RESET%MB'; }"
 	if exist "%clientOutputFile%" (
-		::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
 		echo %GREENCOLOR%[SUCCESS]%RESET% 'Client_Recommended' download complete.
 	) else (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
 		echo %REDCOLOR%[ERROR]%RESET% 'Client_Recommended' download failed.
 	)
 )
-
-:: Download 'Configs' if chosen
+:: Download 'Config_Base.zip' if chosen
 if %installConfigs%==1 (
 		echo %BLUECOLOR%=============================== [DOWNLOAD] ===============================%RESET%
-	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'Config_Client'
+	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'Config_Base'
 	powershell -NoProfile -Command "$url = '%configDownLoadLink%'; $output = '%configOutputFile%'; $webClient = New-Object System.Net.WebClient; $webClient.DownloadFileAsync($url, $output); while ($webClient.IsBusy) { Start-Sleep -Seconds 2; $fileSizeBytes = (Get-Item $output).Length; $fileSizeMB = [math]::Round($fileSizeBytes / 1MB, 2); Write-Host '%BLUECOLOR%[DEBUG]%RESET% Downloaded%GOLDCOLOR%' $fileSizeMB '%RESET%MB'; }"
 	if exist "%configOutputFile%" (
-		::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
-		echo %GREENCOLOR%[SUCCESS]%RESET% 'Config_Client' download complete.
+		echo %GREENCOLOR%[SUCCESS]%RESET% 'Config_Base' download complete.
 	) else (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-		echo %REDCOLOR%[ERROR]%RESET% 'Config_Client' download failed.
+		echo %REDCOLOR%[ERROR]%RESET% 'Config_Base' download failed.
 	)
 )
-
 :: Check if 'options.txt' exists and download if not
 if %installSettings%==1 (
 	echo %BLUECOLOR%=============================== [DOWNLOAD] ===============================%RESET%
 	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'options.txt'
 	powershell -NoProfile -Command "Invoke-WebRequest -Uri '%optionsDownLoadLink%' -OutFile '%optionsFile%'"
 	if exist "%optionsFile%" (
-		::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
 		echo %GREENCOLOR%[SUCCESS]%RESET% 'options.txt' download complete.
 	) else (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
 		echo %REDCOLOR%[ERROR]%RESET% Error: 'options.txt' download failed.
 	)
 )
@@ -195,14 +171,12 @@ if "%installOptifineSettings%"=="1" if "%installClient%"=="1" (
 	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'optionsof.txt'
 	powershell -NoProfile -Command "Invoke-WebRequest -Uri '%optionsofDownLoadLink%' -OutFile '%optionsOfFile%'"
 	if exist "%optionsOfFile%" (
-		::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
 		echo %GREENCOLOR%[SUCCESS]%RESET% 'optionsof.txt' download complete.
 	) else (
-		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
 		echo %REDCOLOR%[ERROR]%RESET% 'optionsof.txt' download failed.
 	)
 )
-
+::================================================================================================
 :: Extract files
 if %extractFiles%==1 (
 	echo %BLUECOLOR%=============================== [EXTRACTION] ===============================%RESET%
@@ -233,10 +207,40 @@ if %extractFiles%==1 (
 		del "%clientOutputFile%"
 		echo %GREENCOLOR%[SUCCESS]%RESET% Client_Recommended Extraction and cleanup complete.
 	)
+	if exist "%configOutputFile%" (
+		echo %BLUECOLOR%[DEBUG]%RESET% Extracting 'Client_Recommended.zip'
+		for /f "delims=" %%f in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; Expand-Archive -Path '%configOutputFile%' -DestinationPath '%parentDir%config' -Force"') do (
+			if not exist "%realPath%\%%f" (
+				powershell -NoProfile -Command "Expand-Archive -Path '%configOutputFile%' -DestinationPath '%parentDir%config'"
+				echo %BLUECOLOR%[DEBUG]%RESET% Extracting '%%f'...
+			) else (
+				echo %BLUECOLOR%[DEBUG]%RESET% Skipping existing file: '%%f'
+			)
+		)
+		del "%clientOutputFile%"
+		echo %GREENCOLOR%[SUCCESS]%RESET% Client_Recommended Extraction and cleanup complete.
+	)
 	
-	::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
 	echo %GREENCOLOR%[SUCCESS]%RESET% Mods/Settings successfully downloaded and installed.
 	echo %GREENCOLOR%=======================================================================%RESET%
 )
 
 pause
+
+
+
+
+
+
+
+
+
+
+::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
+::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
+::set "localServerVersion=1.10"
+::set "localClientVersion=1.10"
+::set "localConfigVersion=1.10"
+::if "%localServerVersion%" neq "%latestServerVersion%"	( echo %REDCOLOR%[DEBUG]%RESET% Server_Necessary version:	%GOLDCOLOR%%localServerVersion%%RESET% / %REDCOLOR%%latestServerVersion%%RESET%	%REDCOLOR%Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[DEBUG]%RESET% Server_Necessary version:	%GOLDCOLOR%%localServerVersion%%RESET% / %GREENCOLOR%%latestServerVersion%%RESET%)
+::if "%localClientVersion%" neq "%latestClientVersion%"	( echo %REDCOLOR%[DEBUG]%RESET% Client_Recommended version:	%GOLDCOLOR%%localClientVersion%%RESET% / %REDCOLOR%%latestClientVersion%%RESET%	%REDCOLOR%Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[DEBUG]%RESET% Client_Recommended version:	%GOLDCOLOR%%localClientVersion%%RESET% / %GREENCOLOR%%latestClientVersion%%RESET%)
+::if "%localConfigVersion%" neq "%latestConfigVersion%"	( echo %REDCOLOR%[DEBUG]%RESET% Config_Base version:		%GOLDCOLOR%%localConfigVersion%%RESET% / %REDCOLOR%%latestConfigVersion%%RESET%	%REDCOLOR%Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[DEBUG]%RESET% Config_Base version:		%GOLDCOLOR%%localConfigVersion%%RESET% / %GREENCOLOR%%latestConfigVersion%%RESET%)
