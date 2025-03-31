@@ -22,10 +22,16 @@ setlocal disableDelayedExpansion
 :: OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 :: SOFTWARE.
 :: =======================================================================
-
-set "localVersion=30.03.2025/30"
 set "baseGitHubURL=https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main"
+set "localBatVersion=2.4"
+set "localServerVersion=1.0"
+set "localClientVersion=1.0"
+set "localConfigVersion=1.0"
 
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty bat_version"') do set "latestBatVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty server_version"') do set "latestServerVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty client_version"') do set "latestClientVersion=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty config_version"') do set "latestConfigVersion=%%i"
 :: =======================================================================
 :: Define ANSI escape sequences for colors
 for /f %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
@@ -40,16 +46,14 @@ set "scriptPath=%~dp0"
 set "scriptPath=%scriptPath:~0,-1%"
 
 for /f "delims=" %%i in ('powershell -NoProfile -Command "[System.IO.Path]::GetFullPath('%scriptPath%')"') do set "realPath=%%i"
-for /f "delims=" %%i in ('powershell -NoProfile -Command "(Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty version"') do set "latestVersion=%%i"
 for %%B in ("%realPath%") do set "folderName=%%~nxB"
 for %%A in ("%realPath%") do set "parentDir=%%~dpA"
 
 echo %BLUECOLOR%=============================== [DEBUG] ===============================%RESET%
-echo %BLUECOLOR%[DEBUG]%RESET% Author:		Mr_Alchemy/gunsgamertv
-echo %BLUECOLOR%[DEBUG]%RESET% ProgressBar:	%GREENCOLOR%Custom%RESET%
-echo %BLUECOLOR%[DEBUG]%RESET% Local version:	%localVersion%
-if "%latestVersion%" neq "%localVersion%" (echo %REDCOLOR%[DEBUG] Server version:	%latestVersion%%RESET%) else (echo %BLUECOLOR%[INFO]%RESET% Server version:	%latestVersion%)
-if "%latestVersion%" neq "%localVersion%" echo %REDCOLOR%[DEBUG] Consider updating your script via Github.%RESET%
+echo %BLUECOLOR%[DEBUG]%RESET% Author:Mr_Alchemy/gunsgamertv
+echo %BLUECOLOR%[DEBUG]%RESET% ProgressBar:%GREENCOLOR%Custom%RESET%
+echo %BLUECOLOR%[DEBUG]%RESET% Local Bat version:%localBatVersion%
+if "%latestBatVersion%" neq "%localBatVersion%" ( echo %REDCOLOR%[DEBUG] Server Bat version:%latestBatVersion%%RESET% && echo %REDCOLOR%[DEBUG] Consider updating via Github.%RESET%) else (echo %BLUECOLOR%[INFO]%RESET% Server Bat version:%latestBatVersion%)
 echo %BLUECOLOR%[DEBUG]%RESET% Script path:	%scriptPath%
 echo %BLUECOLOR%[DEBUG]%RESET% Absolute path:	%realPath%
 
@@ -69,47 +73,58 @@ for /f "skip=1 tokens=*" %%A in ('wmic path win32_VideoController get name') do 
 :done
 
 ::================================================================================================
-if /i not "%folderName%"=="mods" (
+if /i not "%folderName%"=="MC_DogUnion_ModPack" (
+	if /i not "%folderName%"=="mods" (
 	::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
 	echo %REDCOLOR%[ERROR]%RESET% Error: This script is not located in a directory under \mods\.
 	pause
 	exit /b
-)
-if not exist "%realPath%" (
-	::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-	echo %REDCOLOR%[ERROR]%RESET% Error: The directory "%realPath%" does not exist!
-	pause
-	exit /b
-)
-if not exist "%parentDir%config" (
-	::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-	echo %REDCOLOR%[ERROR]%RESET% Error: 'config' folder does not exist in the parent directory!
-	pause
-	exit /b
-)
-if not exist "%parentDir%versions" (
-	::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
-	echo %REDCOLOR%[ERROR]%RESET% Error: 'versions' folder does not exist in the parent directory!
-	pause
-	exit /b
+	)
+	if not exist "%realPath%" (
+		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
+		echo %REDCOLOR%[ERROR]%RESET% Error: The directory "%realPath%" does not exist!
+		pause
+		exit /b
+	)
+	if not exist "%parentDir%config" (
+		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
+		echo %REDCOLOR%[ERROR]%RESET% Error: 'config' folder does not exist in the parent directory!
+		pause
+		exit /b
+	)
+	if not exist "%parentDir%versions" (
+		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
+		echo %REDCOLOR%[ERROR]%RESET% Error: 'versions' folder does not exist in the parent directory!
+		pause
+		exit /b
+	)
 )
 ::================================================================================================
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty serverDownLoadLink"') do set "serverDownLoadLink=%%i"
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "clientDownLoadLink=%%i"
+for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty clientDownLoadLink"') do set "configDownLoadLink=%%i"
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsDownLoadLink"') do set "optionsDownLoadLink=%%i"
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/links.json').Content | ConvertFrom-Json | Select-Object -ExpandProperty optionsofDownLoadLink"') do set "optionsofDownLoadLink=%%i"
 ::================================================================================================
 :: Set download file paths before prompting for the choice
-set "clientOutputFile=%realPath%\Client_Recommended.zip"
 set "serverOutputFile=%realPath%\Server_Necessary.zip"
+set "clientOutputFile=%realPath%\Client_Recommended.zip"
+set "configOutputFile=%realPath%\Config_Client.zip"
 set "optionsFile=%parentDir%options.txt"
 set "optionsOfFile=%parentDir%optionsof.txt"
 
 echo %GOLDCOLOR%=============================== [PROMPT] ===============================%RESET%
+echo "%GOLDCOLOR%[INFO]%RESET% 'Server_Necessary' => %REDCOLOR%NECESSARY%GOLDCOLOR% to join the server"
+echo "%GOLDCOLOR%[INFO]%RESET% 'Client_Recommended' => %GREENCOLOR%OPTIONAL%GOLDCOLOR% for QOL & Performance Mods"
+echo "%GOLDCOLOR%[INFO]%RESET% 'Configs_Client' is %GREENCOLOR%OPTIONAL%GOLDCOLOR% => Install to fix some bugs & QOL"
+echo "%GOLDCOLOR%[INFO]%RESET% The preset settings (options.txt) sets keybinds & graphic options"
+echo "%GOLDCOLOR%[INFO]%RESET% The preset Optifine settings (optionsof.txt) graphic options 'Client_Recommended' must be %GREENCOLOR%TRUE%RESET%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Server_Necessary'?"
 set "installServer=%errorlevel%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Client_Recommended'?"
 set "installClient=%errorlevel%"
+choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Configs'?"
+set "installConfigs=%errorlevel%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install preset settings?"
 set "installSettings=%errorlevel%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install preset Optifine Settings?"
@@ -143,6 +158,20 @@ if %installClient%==1 (
 	) else (
 		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
 		echo %REDCOLOR%[ERROR]%RESET% 'Client_Recommended' download failed.
+	)
+)
+
+:: Download 'Configs' if chosen
+if %installConfigs%==1 (
+		echo %BLUECOLOR%=============================== [DOWNLOAD] ===============================%RESET%
+	echo %BLUECOLOR%[DEBUG]%RESET% Downloading 'Config_Client'
+	powershell -NoProfile -Command "$url = '%configDownLoadLink%'; $output = '%configOutputFile%'; $webClient = New-Object System.Net.WebClient; $webClient.DownloadFileAsync($url, $output); while ($webClient.IsBusy) { Start-Sleep -Seconds 2; $fileSizeBytes = (Get-Item $output).Length; $fileSizeMB = [math]::Round($fileSizeBytes / 1MB, 2); Write-Host '%BLUECOLOR%[DEBUG]%RESET% Downloaded%GOLDCOLOR%' $fileSizeMB '%RESET%MB'; }"
+	if exist "%configOutputFile%" (
+		::echo %GREENCOLOR%=============================== [SUCCESS] ===============================%RESET%
+		echo %GREENCOLOR%[SUCCESS]%RESET% 'Config_Client' download complete.
+	) else (
+		::echo %REDCOLOR%=============================== [ERROR] ===============================%RESET%
+		echo %REDCOLOR%[ERROR]%RESET% 'Config_Client' download failed.
 	)
 )
 

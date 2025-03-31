@@ -1,3 +1,6 @@
 {
-  "version": "30.03.2025/30"
+  "bat_version": "2.4",
+  "server_version":"1.0",
+  "client_version":"1.0",
+  "config_version":"1.0"
 }
