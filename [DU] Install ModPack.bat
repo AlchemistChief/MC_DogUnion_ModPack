@@ -105,7 +105,7 @@ if /i not "%folderName%"=="MC_DogUnion_ModPack" (
 echo %GOLDCOLOR%=============================== [PROMPT] ===============================%RESET%
 echo %GOLDCOLOR%[INFO]%RESET% %REDCOLOR%NECESSARY%RESET%'Server_Necessary',	Install to join the server
 echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Client_Recommended',	Install for QOL and Performance Mods
-echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Config_Base',		Install to fix some bugs and QOL
+echo %GOLDCOLOR%[INFO]%RESET% %REDCOLOR%NECESSARY%RESET%'Config_Base',		Install to fix some bugs and QOL
 echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'options.txt',		Install for preset keybinds and graphic settings
 echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'optionsof.txt',	Install for preset Optifine graphic settings, 'Client_Recommended' must be %GREENCOLOR%TRUE%RESET%
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Server_Necessary'?"
