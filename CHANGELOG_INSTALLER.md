@@ -9,6 +9,12 @@ Current Features:
 ![Features](https://img.shields.io/badge/Setting_Installation-green)
 ![Features](https://img.shields.io/badge/Auto_Extracting-green)
 
+Planned:
+
+![Features](https://img.shields.io/badge/Shaderpack_Installation-orange)
+![Features](https://img.shields.io/badge/Resourcepack_Installation-orange)
+![Features](https://img.shields.io/badge/Automatic_Server_Adding-orange)
+![Features](https://img.shields.io/badge/Detection_For_System_Requirements-orange)
 ---
 
 This changelog tracks changes to the installer, including new features, quality of life improvements, and bug fixes.  
