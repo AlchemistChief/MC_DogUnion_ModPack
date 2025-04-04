@@ -14,7 +14,7 @@ Current Features:
 This changelog tracks changes to the installer, including new features, quality of life improvements, and bug fixes.  
 
 ---
-## [31.03.2025] - ![Installer Version](https://img.shields.io/badge/Installer_Version-2.5-blue) ![Release](https://img.shields.io/badge/Release-Stable-brightgreen)
+## [31.03.2025] - ![Installer Version](https://img.shields.io/badge/Installer_Version-2.6-blue) ![Release](https://img.shields.io/badge/Release-Stable-brightgreen)
 
 ### Features  
 - ⚙️ Removed %RealPath%, as this is equal to the current %scriptPath%
@@ -26,6 +26,12 @@ This changelog tracks changes to the installer, including new features, quality 
   - Now has ONLY the Server Mods needed (Before it was also installing /Client)
 
 ---
+## [31.03.2025] - ![Installer Version](https://img.shields.io/badge/Installer_Version-2.6-darkblue) ![Release](https://img.shields.io/badge/Release-Stable-brightgreen)
+
+### Features  
+- ⚙️ Made 'Config_Base' Necessary.
+- ⚙️ Added better spacing.
+
 ## [31.03.2025] - ![Installer Version](https://img.shields.io/badge/Installer_Version-2.4-darkblue) ![Release](https://img.shields.io/badge/Release-Stable-brightgreen)
 
 ### Features  

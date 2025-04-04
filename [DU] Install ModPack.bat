@@ -33,7 +33,7 @@ echo %BLUECOLOR%[DEBUG]%RESET% Loading Version...
 
 set "baseGitHubURL=https://raw.githubusercontent.com/AlchemistChief/MC_DogUnion_ModPack/main"
 
-set "localBatVersion=2.5"
+set "localBatVersion=2.6"
 
 ::================================================================================================
 for /f "delims=" %%i in ('powershell -NoProfile -Command "$ProgressPreference = 'SilentlyContinue'; (Invoke-WebRequest -Uri '%baseGitHubURL%/version.json' ).Content | ConvertFrom-Json | Select-Object -ExpandProperty bat_version"') do set "latestBatVersion=%%i"
