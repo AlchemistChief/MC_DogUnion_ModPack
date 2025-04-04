@@ -54,7 +54,7 @@ if "%localBatVersion%" neq "%latestBatVersion%" ( echo %REDCOLOR%[DEBUG]%RESET% 
 echo %BLUECOLOR%[DEBUG]%RESET% Server_Necessary version:	N/A / %GREENCOLOR%%latestServerVersion%%RESET%
 echo %BLUECOLOR%[DEBUG]%RESET% Client_Recommended version:	N/A / %GREENCOLOR%%latestClientVersion%%RESET%
 echo %BLUECOLOR%[DEBUG]%RESET% Config_Base version:		N/A / %GREENCOLOR%%latestConfigVersion%%RESET%
-echo %BLUECOLOR%[DEBUG]%RESET% Script path:	%~dp0:~0,-1%
+echo %BLUECOLOR%[DEBUG]%RESET% Script path:	%~dp0
 for %%A in ("%~dp0.") do echo %BLUECOLOR%[DEBUG]%RESET% Folder name:	%%~nA
 
 echo %BLUECOLOR%=========================== [SYSTEM SPECS] ===========================%RESET%
@@ -103,11 +103,11 @@ if /i not "%folderName%"=="MC_DogUnion_ModPack" (
 )
 ::================================================================================================
 echo %GOLDCOLOR%=============================== [PROMPT] ===============================%RESET%
-echo %GOLDCOLOR%[INFO]%RESET% %REDCOLOR%NECESSARY%RESET%'Server_Necessary', Install to join the server
-echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Client_Recommended', Install for QOL and Performance Mods
-echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Config_Base', Install to fix some bugs and QOL
-echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'options.txt', Install for preset keybinds and graphic options
-echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'optionsof.txt', Install for preset Optifine settings graphic options 'Client_Recommended' must be %GREENCOLOR%TRUE%RESET%
+echo %GOLDCOLOR%[INFO]%RESET% %REDCOLOR%NECESSARY%RESET%'Server_Necessary',	Install to join the server
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Client_Recommended',	Install for QOL and Performance Mods
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'Config_Base',		Install to fix some bugs and QOL
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'options.txt',		Install for preset keybinds and graphic settings
+echo %GOLDCOLOR%[INFO]%RESET% %GREENCOLOR%OPTIONAL%RESET%	'optionsof.txt',	Install for preset Optifine graphic settings, 'Client_Recommended' must be %GREENCOLOR%TRUE%RESET%
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Server_Necessary'?"
 set "installServer=%errorlevel%"
 choice /C YN /M "%GOLDCOLOR%[PROMPT]%RESET% Do you want to install 'Client_Recommended'?"
